@@ -6,7 +6,7 @@
 
 ## 🖼️ Game Preview
 
-![WizFly Background](./wizflybg.png)
+![WizFly Background](./gameplay_screenshot.png)
 
 ---
 
