@@ -1,8 +1,8 @@
 import java.awt.* ;
 import java.awt.event.* ;
-import java.util.ArrayList ; //store the pipes in an array list
+import java.util.ArrayList ; //store the crystals in an array list
 import javax.swing.* ;
-import java.util.Random ; //for random number generation of pipes
+import java.util.Random ; //for random number generation of crystals
 
 public class WizFly extends JPanel implements ActionListener , KeyListener {
     int boardWidth = 840 ;
@@ -14,17 +14,17 @@ public class WizFly extends JPanel implements ActionListener , KeyListener {
     Image topCrystalImg ;
     Image bottomCrystalImg ;
 
-    //BIRD
-    int wizardX = boardWidth/12 ; // X coordinate of the bird
-    int wizardY = boardHeight/2 ; // Y coordinate of the bird
-    int wizardWidth = 79 ; // Width of the bird           
-    int wizardHeight = 53 ; // Height of the bird
+    //wizard
+    int wizardX = boardWidth/12 ; // X coordinate of the wizard
+    int wizardY = boardHeight/2 ; // Y coordinate of the wizard
+    int wizardWidth = 79 ; // Width of the wizard           
+    int wizardHeight = 53 ; // Height of the wizard
 
     class wizard {
-        int x = wizardX ; // X coordinate of the bird
-        int y = wizardY ; // Y coordinate of the bird
-        int width = wizardWidth ; // Width of the bird
-        int height = wizardHeight ; // Height of the bird
+        int x = wizardX ; // X coordinate of the wizard
+        int y = wizardY ; // Y coordinate of the wizard
+        int width = wizardWidth ; // Width of the wizard
+        int height = wizardHeight ; // Height of the wizard
         Image img ;
 
         wizard(Image img) {
@@ -32,19 +32,19 @@ public class WizFly extends JPanel implements ActionListener , KeyListener {
         }
     }
 
-    //pipes
-    int CrystalX = boardWidth ; // X coordinate of the pipe
-    int CrystalY = 0 ; // Y coordinate of the pipe
-    int CrystalWidth = 120 ; // Width of the pipe 
-    int CrystalHeight = 547 ; // Height of the pipe  
+    //crystal
+    int CrystalX = boardWidth ; // X coordinate of the crystals
+    int CrystalY = 0 ; // Y coordinate of the crystals
+    int CrystalWidth = 120 ; // Width of the crystals
+    int CrystalHeight = 547 ; // Height of the crystals
 
     class Crystal {
-        int x = CrystalX ; // X coordinate of the pipe
-        int y = CrystalY ; // Y coordinate of the pipe
-        int width = CrystalWidth ; // Width of the pipe
-        int height = CrystalHeight ; // Height of the pipe
+        int x = CrystalX ; // X coordinate of the crystals
+        int y = CrystalY ; // Y coordinate of the crystals
+        int width = CrystalWidth ; // Width of the crystals
+        int height = CrystalHeight ; // Height of the crystals
         Image img ;
-        boolean passed = false ; // Flag to check if the pipe has been passed by the bird
+        boolean passed = false ; // Flag to check if the crystals has been passed by the wizard
 
         Crystal(Image img) {
             this.img = img ;
@@ -55,12 +55,12 @@ public class WizFly extends JPanel implements ActionListener , KeyListener {
 
     //game logic
     wizard wizard ;
-    int velocityX = -4 ; // X velocity of the pipe
-    int velocityY = 0 ; // Y velocity of the bird
-    int gravity = 1 ; // Gravity effect on the bird
+    int velocityX = -4 ; // X velocity of the crystals
+    int velocityY = 0 ; // Y velocity of the wizard
+    int gravity = 1 ; // Gravity effect on the wizard
 
-    ArrayList<Crystal> Crystals; // ArrayList to store the pipes
-    Random random = new Random() ; // Random number generator for pipe placement
+    ArrayList<Crystal> Crystals; // ArrayList to store the crystals
+    Random random = new Random() ; // Random number generator for crystals placement
 
     Timer gameLoop;
     Timer placeCrystalsTimer;
@@ -83,21 +83,21 @@ public class WizFly extends JPanel implements ActionListener , KeyListener {
         topCrystalImg = new ImageIcon(getClass().getResource("./topcrystal.png")).getImage() ;
         bottomCrystalImg = new ImageIcon(getClass().getResource("./bottomcrystal1.png")).getImage() ;
  
-        //bird
-        wizard= new wizard(wizardImg) ; // Create a new Bird object with the bird image
+        //wizard
+        wizard= new wizard(wizardImg) ; // Create a new wizard object with the wizard image
         
-        Crystals = new ArrayList<Crystal>() ; // Initialize the pipes ArrayList
+        Crystals = new ArrayList<Crystal>() ; // Initialize the crystals ArrayList
 
-        //place pipes timer
+        //place crystals timer
         placeCrystalsTimer = new Timer(2500, new ActionListener() { // Create a timer that fires every 2 seconds
            
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    placeCrystals() ; // Call the placePipes method to create a new pipe
+                    placeCrystals() ; // Call the place crystals method to create a new crystals
                 }
             }) ;
        
-        placeCrystalsTimer.start() ; // Start the place pipes timer
+        placeCrystalsTimer.start() ; // Start the place crystals timer
 
         //game timer
         gameLoop = new Timer(1000/60, this) ;// Create a timer that fires every 1000/60 milliseconds (60 FPS)
@@ -105,18 +105,17 @@ public class WizFly extends JPanel implements ActionListener , KeyListener {
     }  
     
     public void placeCrystals() {
-        int randomCrystalY = (int) (CrystalY - CrystalHeight/4 - Math.random()*(CrystalHeight/2)) ; // Generate a random Y coordinate for the pipe
+        int randomCrystalY = (int) (CrystalY - CrystalHeight/4 - Math.random()*(CrystalHeight/2)) ; // Generate a random Y coordinate for the crystal
         
-        int openingSpace = boardHeight/4 ; // Space between the top and bottom pipes
-        // Create a new Pipe object with the top and bottom pipe images
-        Crystal topCrystal = new Crystal(topCrystalImg) ; // Create a new Pipe object with the top pipe image
-        topCrystal.y = randomCrystalY ; // Set the Y coordinate of the top pipe
-        Crystals.add(topCrystal) ; // Add the pipe to the pipes ArrayList
+        int openingSpace = boardHeight/4 ; // Space between the top and bottom crystals
+        // Create a new crystals object with the top and bottom crystals images
+        Crystal topCrystal = new Crystal(topCrystalImg) ; // Create a new crystals object with the top crystals image
+        topCrystal.y = randomCrystalY ; // Set the Y coordinate of the top crystals
+        Crystals.add(topCrystal) ; // Add the crystals to the crystals ArrayList
     
-        Crystal bottomCrystal = new Crystal(bottomCrystalImg) ; // Create a new Pipe object with the bottom pipe image
-        bottomCrystal.y= topCrystal.y + CrystalHeight + openingSpace ; // Set the Y coordinate of the bottom pipe
-        Crystals.add(bottomCrystal) ; // Add the pipe to the pipes ArrayList
-    
+        Crystal bottomCrystal = new Crystal(bottomCrystalImg) ; // Create a new crystals object with the bottom crystals image
+        bottomCrystal.y= topCrystal.y + CrystalHeight + openingSpace ; // Set the Y coordinate of the bottom crystals
+        Crystals.add(bottomCrystal) ; // Add the crystals to the crystals ArrayList
     }
 
 
@@ -129,13 +128,13 @@ public class WizFly extends JPanel implements ActionListener , KeyListener {
     public void draw(Graphics g) {
         // Draw the background image
         g.drawImage(backgroundImg, 0, 0, boardWidth, boardHeight, null) ;
-        // Draw the bird image
+        // Draw the wizard image
         g.drawImage(wizard.img, wizard.x, wizard.y, wizard.width, wizard.height, null) ;
        
-        //pipes
-        for (int i =0 ; i < Crystals.size() ; i++) { // Loop through the pipes ArrayList
-            Crystal Crystal = Crystals.get(i) ; // Get the current pipe
-            g.drawImage(Crystal.img, Crystal.x, Crystal.y, Crystal.width, Crystal.height, null) ; // Draw the pipe image
+        //crystals
+        for (int i =0 ; i < Crystals.size() ; i++) { // Loop through the crystals ArrayList
+            Crystal Crystal = Crystals.get(i) ; // Get the current crystals
+            g.drawImage(Crystal.img, Crystal.x, Crystal.y, Crystal.width, Crystal.height, null) ; // Draw the crystals image
         }
 
         //score
@@ -151,29 +150,29 @@ public class WizFly extends JPanel implements ActionListener , KeyListener {
     
 
     public void move(){
-        //bird 
-        velocityY += gravity ; // Apply gravity to the bird's velocity
+        //wizard 
+        velocityY += gravity ; // Apply gravity to the wizard's velocity
         wizard.y += velocityY ;
-        wizard.y = Math.max(wizard.y , 0) ;// Update the Y coordinate of the bird based on its velocity
+        wizard.y = Math.max(wizard.y , 0) ;// Update the Y coordinate of the wizard based on its velocity
     
-        //pipes
-        for (int i = 0 ; i < Crystals.size() ; i++) { // Loop through the pipes ArrayList
-            Crystal Crystal = Crystals.get(i) ; // Get the current pipe
+        //crystals
+        for (int i = 0 ; i < Crystals.size() ; i++) { // Loop through the crystals ArrayList
+            Crystal Crystal = Crystals.get(i) ; // Get the crystals crystal
             
-            Crystal.x += velocityX ; // Move the pipe to the left based on its velocity
+            Crystal.x += velocityX ; // Move the crystals to the left based on its velocity
             if (collision(wizard, Crystal) ) {
                 gameOver = true ; // Set the game over flag to true if there is a collision
             }
         }
 
-        if (wizard.y > boardHeight) { // Check if the bird has fallen below the bottom of the screen
+        if (wizard.y > boardHeight) { // Check if the wizard has fallen below the bottom of the screen
             gameOver = true ; // Set the game over flag to true
         }   
 
-        for (Crystal Crystal : Crystals) { // Loop through the pipes ArrayList
-            if (!Crystal.passed && wizard.x > Crystal.x + Crystal.width) { // Check if the bird has passed the pipe
+        for (Crystal Crystal : Crystals) { // Loop through the crystals ArrayList
+            if (!Crystal.passed && wizard.x > Crystal.x + Crystal.width) { // Check if the wizard has passed the crystal
             score += 0.5; // Increment the score
-            Crystal.passed = true; // Set the passed flag to true for the pipe
+            Crystal.passed = true; // Set the passed flag to true for the crystals
             }
         }
     }
@@ -192,7 +191,7 @@ public class WizFly extends JPanel implements ActionListener , KeyListener {
 
     if (gameOver) { // Check if the game is over
         gameLoop.stop() ; // Stop the game loop timer
-        placeCrystalsTimer.stop() ; // Stop the place pipes timer
+        placeCrystalsTimer.stop() ; // Stop the place crystals timer
         
     }
 
@@ -204,16 +203,16 @@ public class WizFly extends JPanel implements ActionListener , KeyListener {
   @Override
   public void keyPressed(KeyEvent e) {
     if (e.getKeyCode() == KeyEvent.VK_SPACE) { // Check if the space key is pressed
-        velocityY = -9 ; // Set the bird's velocity to -6 when the space key is pressed
+        velocityY = -9 ; // Set the wizard's velocity to -6 when the space key is pressed
         if (gameOver){
             //restart the game by resetiing the conditions
-            wizard.y=wizardY ; // Reset the bird's Y coordinate to the initial position
+            wizard.y=wizardY ; // Reset the wizard's Y coordinate to the initial position
             velocityY=0;
-            Crystals.clear() ; // Clear the pipes ArrayList
+            Crystals.clear() ; // Clear the crystals ArrayList
             score = 0 ; // Reset the score to 0
             gameOver = false ; // Set the game over flag to false   
             gameLoop.start() ; // Start the game loop timer
-            placeCrystalsTimer.start() ; // Start the place pipes timer
+            placeCrystalsTimer.start() ; // Start the place crystals timer
        
         }
     }

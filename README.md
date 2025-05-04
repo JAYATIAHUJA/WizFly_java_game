@@ -80,7 +80,7 @@ Ensure all image assets (`.png` files) are in the same directory as your `.java`
 
 ## 📸 Screenshots
 
-![WizFly Screenshot](./screenshot.png)
+![WizFly Screenshot](./gameplay_screenshot.png)
 
 ---
 
