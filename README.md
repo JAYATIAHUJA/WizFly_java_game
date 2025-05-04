@@ -50,7 +50,7 @@ WizFly_game/
 3. Compile and run the game:
 
 ```bash
-javac App.java
+javac *.java
 java App
 ```
 
@@ -78,12 +78,15 @@ Ensure all image assets (`.png` files) are in the same directory as your `.java`
 
 ---
 
+<<<<<<< HEAD
 ## 📸 Screenshots
 
 ![WizFly Screenshot](./gameplay_screenshot.png)
 
 ---
 
+=======
+>>>>>>> 9821321dc98b978c06ef953b141483de3b51ca09
 ## 🧑‍💻 Built With
 
 - Java (Swing for GUI)
@@ -93,7 +96,7 @@ Ensure all image assets (`.png` files) are in the same directory as your `.java`
 
 ## 🌟 Credits
 
-- Game design and logic: [Your Name]
+- Game design : [JAYATI AHUJA]
 - Assets created using AI-generated tools and manual editing
 
 ---
